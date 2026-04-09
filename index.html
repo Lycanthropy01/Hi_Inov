@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hi Inov — Application</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #f5f0e8;
+      --cream-dark: #ece5d8;
+      --ink:        #1a1612;
+      --ink-mid:    #4a3f35;
+      --ink-light:  #9b8f83;
+      --rust:       #b85c38;
+      --sage:       #5a7a62;
+      --slate:      #4a5568;
+      --border:     rgba(26,22,18,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+
+
+    /* ── NAV ── */
+    nav {
+
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2.5rem;
+      height: 56px;
+      background: rgba(245,240,232,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+    .nav-brand em { font-style: italic; color: var(--rust); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+
+
+    /* ── HERO ── */
+    .hero {
+
+      padding-top: 56px;
+      overflow: hidden;
+    }
+
+    .hero-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 88vh;
+    }
+
+    .hero-left {
+      padding: 5rem 3rem 4rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: auto;
+    }
+
+    .hero-display {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 0;
+    }
+
+    .hero-display .pre {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink-mid);
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-display h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .hero-display h1 .serif-italic {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rust);
+    }
+
+    .hero-display .post {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--ink-light);
+      margin-top: 1.2rem;
+    }
+
+    .hero-footnote {
+      font-size: 0.72rem;
+      color: var(--ink-light);
+      letter-spacing: 0.04em;
+    }
+
+    .hero-right {
+      padding: 5rem 4rem 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .hero-shape {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 280px;
+      opacity: 0.18;
+    }
+
+    .hero-intro {
+      max-width: 380px;
+    }
+
+    .hero-intro p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--ink-mid);
+      margin-bottom: 2rem;
+    }
+
+    .hero-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      padding: 0.3rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--ink-mid);
+      background: transparent;
+    }
+
+    /* ── DIVIDER ── */
+    .rule {
+      border: none;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .q-section {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: 100vh;
+    }
+
+    .q-sidebar {
+      border-right: 1px solid var(--border);
+      padding: 4rem 2rem 4rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: sticky;
+      top: 56px;
+      align-self: start;
+      height: calc(100vh - 56px);
+    }
+
+    .q-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--cream-dark);
+    }
+    .q-num.rust { color: rgba(184,92,56,0.18); }
+    .q-num.sage { color: rgba(90,122,98,0.18); }
+
+    .q-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    .q-nav-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--ink-mid);
+      line-height: 1.5;
+      margin-top: auto;
+    }
+
+    /* ── Q BODY ── */
+    .q-body {
+      padding: 4rem 5rem 4rem 4rem;
+    }
+
+    .question-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.35;
+      color: var(--ink);
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Pull quote */
+    .pull-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2vw, 1.75rem);
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--ink);
+      padding-left: 1.8rem;
+      border-left: 3px solid var(--rust);
+      margin-bottom: 2.5rem;
+    }
+    .pull-quote.green { border-left-color: var(--sage); }
+    .pull-quote.amber { border-left-color: #c9973a; }
+
+    /* Body text */
+    .body-text {
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink-mid);
+      margin-bottom: 1.5rem;
+      max-width: 640px;
+    }
+    .body-text + .body-text {
+      margin-top: 0;
+    }
+
+    /* Sub-label */
+    .sub-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-top: 2.5rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { display: flex; flex-direction: column; margin-bottom: 2.5rem; }
+    .tl-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 1.5rem;
+      padding: 1.3rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .tl-row:last-child { border-bottom: none; }
+    .tl-org {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      padding-top: 0.2rem;
+    }
+    .tl-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--ink);
+    }
+    .tl-desc {
+      font-size: 0.83rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    /* ── PILLARS ── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+      align-items: start;
+    }
+    .pillar-card {
+      padding: 2rem 1.6rem;
+      border-right: 1px solid var(--border);
+    }
+    .pillar-card:last-child { border-right: none; }
+    .pillar-line {
+      width: 24px; height: 2px;
+      margin-bottom: 1.2rem;
+    }
+    .pillar-line.rust  { background: var(--rust); }
+    .pillar-line.sage  { background: var(--sage); }
+    .pillar-line.amber { background: #c9973a; }
+    .pillar-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .pillar-card p {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    /* ── AI FLOW ── */
+    .ai-steps {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+      align-items: start;
+    }
+    .ai-step {
+      padding: 2rem 1.6rem;
+      border-right: 1px solid var(--border);
+    }
+    .ai-step:last-child { border-right: none; }
+    .step-n {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: rgba(90,122,98,0.2);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+    .ai-step h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+    .ai-step p {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--ink);
+    }
+    .footer-note {
+      font-size: 0.72rem;
+      color: var(--ink-light);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-top { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .q-section { grid-template-columns: 1fr; }
+      .q-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 2rem 2rem 1.5rem; flex-direction: row; flex-wrap: wrap; align-items: center; }
+      .q-nav-title { display: none; }
+      .q-body { padding: 2rem; }
+      .pillars, .ai-steps { grid-template-columns: 1fr; }
+      .pillar-card, .ai-step { border-right: none; border-bottom: 1px solid var(--border); }
+      nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Hi <em>Inov</em> — Internship Application</div>
+  <ul class="nav-links">
+    <li><a href="#q1">Why VC</a></li>
+    <li><a href="#q2">AI Revolution</a></li>
+    <li><a href="#q3">AI Daily Life</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top">
+
+    <div class="hero-left">
+      <div class="hero-eyebrow">Hi Inov · Venture Capital Internship · 2026</div>
+
+      <div class="hero-display">
+        <div class="pre">from first principles,</div>
+        <h1>
+          <span>Venture</span><br>
+          <span class="serif-italic">Capital</span>
+        </h1>
+        <div class="post">"Hands-on, from entrepreneurs to entrepreneurs."</div>
+      </div>
+
+      <div class="hero-footnote">Paris · Lyon · Munich — Seed to Series B</div>
+    </div>
+
+    <div class="hero-right">
+      <svg class="hero-shape" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M150 20 C200 20, 270 60, 275 120 C280 180, 240 250, 180 270 C120 290, 50 260, 30 200 C10 140, 40 60, 100 35 C120 27, 135 20, 150 20Z" stroke="#1a1612" stroke-width="1.5" fill="none"/>
+        <path d="M150 45 C190 45, 248 78, 252 130 C256 182, 222 240, 170 257 C118 274, 60 248, 43 195 C26 142, 52 75, 103 55 C120 48, 136 45, 150 45Z" stroke="#1a1612" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M150 70 C182 70, 227 97, 230 140 C233 183, 205 230, 161 244 C117 258, 70 236, 56 190 C42 144, 64 90, 106 74 C121 69, 137 70, 150 70Z" stroke="#1a1612" stroke-width="0.8" fill="none" opacity="0.4"/>
+        <path d="M150 95 C175 95, 207 116, 209 150 C211 184, 188 220, 152 231 C116 242, 80 224, 69 185 C58 146, 76 105, 109 93 C122 90, 137 95, 150 95Z" stroke="#1a1612" stroke-width="0.6" fill="none" opacity="0.3"/>
+        <circle cx="150" cy="150" r="8" stroke="#1a1612" stroke-width="0.8" fill="none" opacity="0.25"/>
+      </svg>
+
+      <div class="hero-intro">
+        <p>
+          A business school student with science background turns investor-in-training — bridging peer-reviewed science and seed-stage conviction. Focused on AI infrastructure, ClimateTech, and the software enabling Europe's deep tech ecosystem.
+        </p>
+        <div class="hero-tag-row">
+          <span class="tag">B2B Software</span>
+          <span class="tag">AI</span>
+          <span class="tag">ClimateTech</span>
+          <span class="tag">Cybersecurity</span>
+          <span class="tag">Defence</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- Q1 -->
+<section class="q-section" id="q1">
+  <aside class="q-sidebar">
+    <div class="q-label">Question</div>
+    <div class="q-num rust">01</div>
+    <div class="q-nav-title">Why venture capital over everything else?</div>
+  </aside>
+  <div class="q-body">
+
+    <div class="question-text">Why are you interested in venture capital more than something else?</div>
+
+    <div class="pull-quote">"Seed-stage investing is one question: is this science actually credible, and is this the right team to execute on it?"</div>
+
+    <p class="body-text">I chose VC because I want to be the investor who can tell when a technical claim is real, and then help the right founders turn that into products that matter.</p>
+
+    <p class="body-text">VC is the role that combines 3 dimensions at once: technical judgment, early-stage company building, and financial thinking. The most extraordinary part of early-stage investing is to be the person who says yes at the moment a genuinely important breakthrough needs a partner.</p>
+
+    <p class="body-text">The vaccines, the gene therapies, the grid software that makes the energy transition survivable — these didn't happen because the science was obvious. They happened because someone with enough taste, enough conviction, and enough genuine care chose to back the founder behind them. That is what I want to spend my career doing. Hi Inov's focus — B2B software in AI, ClimateTech, Cybersecurity, and Compliance — is precisely the territory where I believe the next decade's most consequential bets will be made. I want to be in the room making them.</p>
+
+    <span class="sub-label">Formative experiences</span>
+    <div class="timeline">
+      <div class="tl-row">
+        <div class="tl-org">Hello Tomorrow</div>
+        <div>
+          <div class="tl-title">Deep Tech Evaluation at Scale</div>
+          <div class="tl-desc">Sourced over 20,000+ deep tech startups across 13 verticals and evaluated 100+ in the AI, Energy and Climate sectors — learning to distinguish genuine technical claims from hype before a single line of financial modelling.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-org">VentureBlick</div>
+        <div>
+          <div class="tl-title">Health-tech Deal Experience</div>
+          <div class="tl-desc">Facilitated early-stage healthtech deals — understanding how decisions made at seed compound through every subsequent funding round.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- Q2 -->
+<section class="q-section" id="q2">
+  <aside class="q-sidebar">
+    <div class="q-label">Question</div>
+    <div class="q-num sage">02</div>
+    <div class="q-nav-title">Bets on the AI revolution</div>
+  </aside>
+  <div class="q-body">
+
+    <div class="question-text">
+      As an investor, what kind of bets would you make on the AI revolution?
+    </div>
+
+    <div class="pull-quote green">
+      "The real AI bets are not in the model layer — they're in the physical infrastructure the models depend on, and in the vertical software that owns both the data and the workflow it runs on."
+    </div>
+
+    <p class="body-text">
+      My conviction is that the alpha sits in the energy and data infrastructure that makes AI physically possible, and in vertical software that has achieved genuine lock-in by owning the underlying data.
+    </p>
+
+    <span class="sub-label">Three conviction areas</span>
+    <div class="pillars">
+      <div class="pillar-card">
+        <div class="pillar-line rust"></div>
+        <h3>Energy Resilience</h3>
+        <p>AI data centres need near-perfect power reliability. Yet both the US and Europe are underinvested in storage and grid capacity. In Europe, hundreds of billions are needed in grid upgrades, with a large share of distribution grids already older than 40 years. At the same time, microgrids and BESS software are growing fast. I would look for the software layer that operates this energy system: grid optimisation, demand forecasting, and control systems where the customer cannot churn without taking real operational risk.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-line sage"></div>
+        <h3>Vertical AI with Proprietary Data</h3>
+        <p>Open-source model trajectories suggest: profits shift to whoever controls proprietary data and the physical workflow it runs on. Bioptimus in Paris is a good example in biotech: open-source model first, then build a unique dataset with top pharma companies that no one else has. Similar logic applies in finance tools like Rowspace, which become core intelligence layers once they ingest years of internal data.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- Q3 -->
+<section class="q-section" id="q3">
+  <aside class="q-sidebar">
+    <div class="q-label">Question</div>
+    <div class="q-num" style="color:rgba(201,151,58,0.2)">03</div>
+    <div class="q-nav-title">Best use of AI in daily life</div>
+  </aside>
+  <div class="q-body">
+
+    <div class="question-text">
+      What is your best use of AI in your daily life?
+    </div>
+
+    <div class="pull-quote amber">
+      "I built a system where AI handles information retrieval and pattern-matching — so my analysis stays reserved for insights requiring human synthesis."
+    </div>
+
+    <p class="body-text">
+      The system replicates — at personal scale — what the best VC firms do institutionally: systematic market mapping, continuous signal intake, and structured knowledge compounding. In a role where pattern recognition across sectors is the job, this is a direct productivity multiplier.
+    </p>
+
+    <span class="sub-label">Three-part system</span>
+    <div class="ai-steps">
+      <div class="ai-step">
+        <div class="step-n">01</div>
+        <h4>Sourcing</h4>
+        <p>Perplexity and Comet for fetching and identifying early-stage startups through the webpage of different fund and incubators' portfolio, and automatically creating a table for outreach sequences — compressing days of manual research into minutes.</p>
+      </div>
+      <div class="ai-step">
+        <div class="step-n">02</div>
+        <h4>Knowledge Integration</h4>
+        <p>Claude Code processes newsletters, research papers, and podcasts into a structured personal knowledge base: 145+ learnings across 13 deep-tech verticals.</p>
+      </div>
+      <div class="ai-step">
+        <div class="step-n">03</div>
+        <h4>Pattern Recognition</h4>
+        <p>The system surfaces cross-disciplinary connections automatically — preserving human judgment only for original synthesis and conviction-building.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Application for Hi Inov</div>
+  <div class="footer-note">April 2026 · Venture Capital Internship</div>
+</footer>
+
+
+
+</body>
+</html>
